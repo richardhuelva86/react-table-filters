@@ -26,30 +26,30 @@ class ListFilter extends Component {
   }
 
   render() {
+   const allLabel = this.props.allLabel || "all";
    let options = this.props.options;
-   options.push({label: "Todos", value: "all"});
+   options.push({label: allLabel, value: "all"});
+   const style = this.props.style || {width: "100%"};
 
    const optionsList = options.map( (option, index) => {
     return <option key={index} value={option.value}>{option.label}</option>
    });
 
     return (
-
           <div>
-
             <select 
               onChange={this.changeFilterValue}
-              style={{ width: "100%" }}
+              style={style}
               value={this.state.filterValue}
             >
             {optionsList}
             </select>
-
           </div>
     );
   }
 }
 ListFilter.propTypes = {
-    options: PropTypes.arrayOf(PropTypes.object)
+    options: PropTypes.arrayOf(PropTypes.object),
+    onChange: PropTypes.func
 }
 export default ListFilter;

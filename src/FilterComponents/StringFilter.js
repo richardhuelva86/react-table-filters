@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class StringFilter extends Component {
   constructor(props) {
@@ -6,8 +7,7 @@ class StringFilter extends Component {
 
     this.state = {
       filterType: 'string',
-      filterOperator: '',
-      filterValue: '',
+      filterValue: this.props.filterValue || '',
     };
 
     this.changeFilterValue = this.changeFilterValue.bind(this);
@@ -26,12 +26,17 @@ class StringFilter extends Component {
   }
 
   render() {
+    const style = this.props.style || {width: "100%"};
     return (
 
           <div>
-            <input type="text" value={this.state.filterValue} style={{width: "100%"}} onChange={this.changeFilterValue}/>
+            <input type="text" value={this.state.filterValue} style={style} onChange={this.changeFilterValue}/>
           </div>
     );
   }
+}
+
+StringFilter.propTypes = {
+    onChange: PropTypes.func
 }
 export default StringFilter;

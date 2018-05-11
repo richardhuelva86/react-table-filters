@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import PropTypes from 'prop-types'; 
 
 class DateFilter extends Component {
   constructor(props) {
@@ -53,28 +53,40 @@ class DateFilter extends Component {
   }
 
   render() {
+
+    //Labels
+    const allLabel = this.props.gtLabel || "All";
+    const gtLabel = this.props.gtLabel || ">=";
+    const ltLabel = this.props.gtLabel || "<=";
+    const eqLabel = this.props.eqLabel || "=";
+    const btwLabel = this.props.btwLabel || "between";
+    const styleSelector = this.props.styleSelector ||{ width: "33%" };
+    const styleDatePicker1 = this.props.styleDatePicker1 ||{ width: "33%" };
+    const styleDatePicker2 = this.props.styleDatePicker2 ||{ width: "33%" };
+
     return (
-
           <div>
-
             <select 
               onChange={this.changeFilterOperator}
-              style={{ width: "33%" }}
+              style={styleSelector}
               value={this.state.filterOperator}
             >
-              <option value="all">Todos</option>
-              <option value="gt">{">="}</option>
-              <option value="lt">{"<="}</option>
-              <option value="eq">{"="}</option>
-              <option value="btw">{"intervalo"}</option>
+              <option value="all">{allLabel}</option>
+              <option value="gt">{gtLabel}</option>
+              <option value="lt">{ltLabel}</option>
+              <option value="eq">{eqLabel}</option>
+              <option value="btw">{btwLabel}</option>
             </select>
 
-            <input type="date" value={this.state.filterValue1} style={{width: "33%"}} onChange={this.changeFilterValue1}/>
-            <input disabled={this.state.filterOperator!=="btw"} type="date" value={this.state.filterValue2} style={{width: "33%"}} onChange={this.changeFilterValue2}/>
+            <input type="date" value={this.state.filterValue1} style={styleDatePicker1} onChange={this.changeFilterValue1}/>
+            <input disabled={this.state.filterOperator!=="btw"} type="date" value={this.state.filterValue2} style={styleDatePicker2} onChange={this.changeFilterValue2}/>
           </div>
     );
   }
 }
 
+DateFilter.propTypes = {
+    onChange: PropTypes.func
+}
 
 export default DateFilter;

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class NumericFilter extends Component {
   constructor(props) {
@@ -10,21 +11,8 @@ class NumericFilter extends Component {
       filterValue: '',
     };
 
-    this.changeFilterType = this.changeFilterType.bind(this);
     this.changeFilterValue = this.changeFilterValue.bind(this);
     this.changeFilterOperator = this.changeFilterOperator.bind(this);
-  }
-
-  changeFilterType(event) {
-    let filterType = event.target.value;
-    const newState = {
-      ...this.state,
-      filterType
-    };
-    // Update local state
-    this.setState(newState);
-    // Fire the callback to alert React-Table of the new filter
-    this.props.onChange(newState);
   }
 
   changeFilterValue(event) {
@@ -36,6 +24,7 @@ class NumericFilter extends Component {
     // Update local state
     this.setState(newState);
     // Fire the callback to alert React-Table of the new filter
+    console.log("llamadno");
     this.props.onChange(newState);
   }
   changeFilterOperator(event) {
@@ -51,24 +40,35 @@ class NumericFilter extends Component {
   }
 
   render() {
+
+    const allLabel = this.props.gtLabel || "All";
+    const gtLabel = this.props.gtLabel || ">=";
+    const ltLabel = this.props.gtLabel || "<=";
+    const eqLabel = this.props.eqLabel || "=";
+    const styleSelector = this.props.styleSelector ||{ width: "50%" };
+    const styleValueField = this.props.styleValueField ||{ width: "50%" };
     return (
 
           <div>
 
             <select 
               onChange={this.changeFilterOperator}
-              style={{ width: "50%" }}
+              style={styleSelector}
               value={this.state.filterOperator}
             >
-              <option value="all">Todos</option>
-              <option value=">=">{">="}</option>
-              <option value="<=">{"<="}</option>
-              <option value="=">{"="}</option>
+              <option value="all">{allLabel}</option>
+              <option value="gt">{gtLabel}</option>
+              <option value="lt">{ltLabel}</option>
+              <option value="eq">{eqLabel}</option>
             </select>
 
-            <input type="number" value={this.state.filterValue} style={{width: "50%"}} onChange={this.changeFilterValue}/>
+            <input type="number" value={this.state.filterValue} style={styleValueField} onChange={this.changeFilterValue}/>
           </div>
     );
   }
+}
+
+NumericFilter.propTypes = {
+    onChange: PropTypes.func
 }
 export default NumericFilter;
